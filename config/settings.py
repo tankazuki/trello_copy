@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'trello_copy.apps.KanbanConfig',
+    'kanban.apps.KanbanConfig',
 ]
 
 MIDDLEWARE = [
