@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, resolve_url
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.views.generic import DetailView
+from django.views.generic import DetailView, UpdateView
+from .forms import UserForm
+from django.urls import reverse_lazy
+from .mixins import OnlyYouMixin
 
 
 def index(request):
@@ -31,3 +34,13 @@ def signup(request):
 class UserDetailView(DetailView):
     model = User
     template_name = "kanban/users/detail.html"
+
+
+class UserUpdateView(OnlyYouMixin, UpdateView):
+    model = User
+    template_name = "kanban/users/update.html"
+    form_class = UserForm
+    success_url = reverse_lazy("kanban:home")
+
+    def get_success_url(self):
+        return resolve_url('kanban:users_detail', pk=self.kwargs['pk'])
