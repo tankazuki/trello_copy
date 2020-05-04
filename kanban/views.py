@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.views.generic import DetailView, UpdateView, CreateView
+from django.views.generic import DetailView, UpdateView, CreateView, ListView
 from .forms import UserForm, ListForm
 from django.urls import reverse_lazy
 from .mixins import OnlyYouMixin
@@ -57,3 +57,13 @@ class ListCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+class ListListView(LoginRequiredMixin, ListView):
+    model = List
+    template_name = "kanban/lists/list.html"
+
+
+class ListDetailView(LoginRequiredMixin, DetailView):
+    model = List
+    template_name = "kanban/lists/detail.html"
