@@ -15,11 +15,6 @@ def index(request):
     return render(request, "kanban/index.html")
 
 
-@login_required
-def home(request):
-    return render(request, "kanban/home.html")
-
-
 def signup(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
@@ -31,6 +26,11 @@ def signup(request):
         form = UserCreationForm()
         context = {"form": form}
         return render(request, "kanban/signup.html", context)
+
+
+class HomeView(LoginRequiredMixin, ListView):
+    model = List
+    template_name = "kanban/home.html"
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
