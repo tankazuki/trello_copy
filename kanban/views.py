@@ -67,3 +67,13 @@ class ListListView(LoginRequiredMixin, ListView):
 class ListDetailView(LoginRequiredMixin, DetailView):
     model = List
     template_name = "kanban/lists/detail.html"
+
+
+class ListUpdateView(LoginRequiredMixin, UpdateView):
+    model = List
+    template_name = "kanban/lists/update.html"
+    form_class = ListForm
+    success_url = reverse_lazy("kanban:lists_list")
+
+    def get_success_form(self):
+        return resolve_url("kanban:lists_detail", pk=self.kwargs['pk'])
