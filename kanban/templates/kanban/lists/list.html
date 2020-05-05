@@ -4,14 +4,14 @@
   <h1>リスト一覧</h1>
   <div class="card-columns">
     {% for list in list_list %}
-    <div class="card">
+    <a href="{% url 'kanban:lists_detail' list.pk %}" class="card">
       <div class="card-body">
         <h5 class="card-title">{{ list.title }}</h5>
         <footer>
           <small class="text-muted">作成者: {{ list.user.username }}</small>
         </footer>
       </div>
-    </div>
+    </a>
     {% endfor %}
   </div>
 </div>
